@@ -6,10 +6,15 @@ USB VID: 0x2e24
 USB PID: 0x0652
 
 ## Flash Chip
+
 Chip used: BY25Q32A
+
 Packaging: SOIC-8
+
 Size: 4MB
+
 Datasheet: http://www.trolink.cn/UploadFiles/Product/20160426174531_29979.pdf
+
 
 ## Dumping
 MiniPro TL866II Plus supports it for parallel reading
