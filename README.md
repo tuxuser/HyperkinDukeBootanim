@@ -42,5 +42,39 @@ Input #0, avi, from 'test.avi':
 ### Checksums
 Unknown
 
+## Mounting the FAT16 image for modification
+### Linux/Unix
+Simply use **mount** (with msdos-utils / vfat support installed ofc)
+```
+mkdir /tmp/fat16volume
+mount image.bin /tmp/fat16volume
+# Copy new bootanim
+cp new_test.avi /tmp/fat16volume/test.avi
+sync
+# Unmount again
+umount /tmp/fat16volume
+```
+
+### Windows
+Use something like [OSFMount](https://www.osforensics.com/tools/mount-disk-images.html)
+
+## Converting a video file
+The original bootanimation is 7.96 seconds long, lets assume 8 seconds is also fine
+
+In this example ffmpeg is used for the transcoding
+```
+ffmpeg \
+  -i input.mp4 \         # Input video file
+  -an \                  # Ditch audio stream
+  -c:v mjpeg \           # Encode as MJPEG
+  -vf "transpose=2" \    # Rotate 90 degress counter-clockwise
+  -ss 00:00:02 -t 8 \    # Optional: Trim video (Start at second 2, duration of 8 seconds)
+  -s 240x320 \           # Output resolution: 240x320
+  -aspect 3:4 \          # Aspect ratio
+  -filter:v fps=fps=25 \ # Frames per second
+  test.avi               # Output filename
+```
+Check if resulting file looks nice and plays, then copy it into the FAT16 filesystem image.
+
 ## Credits
 chron4 for providing a flashdump and gettin me interested
