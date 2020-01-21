@@ -38,7 +38,8 @@ USB PID: 0x0652
 
 ## SoC
 
-Chip Id: GP32705
+Chip Id: GPL32705B (Generalplus)
+Product Brief: [Generalplus website](http://www.generalplus.com/pLVfLN1229SVpfSNnormal_download)
 
 Possibly related sourcecode: [Github](https://github.com/ablueway/fullmac/tree/master/os/MicroC)
 
