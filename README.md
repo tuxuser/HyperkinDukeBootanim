@@ -1,59 +1,117 @@
 # HyperkinDukeBootanim
-Xbox One Hyperkin Duke Controller - Info about changing bootanimation
+
+Xbox One Hyperkin Duke Controller
+Technical research and info about changing the boot/startup-animation
 
 ## Demo
+
 ![Hyperkin Duke bootanimation](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/demo_gc.gif)
 
-## How to?
+## WARNING
+
+This page describes actions that might damage your device or firmware. Proceed with care!
+Everything you do is under your own responsibility!
+No guarantee for correctness of this information is given!
+You will void your device's warranty!
+
+## How to
+
 1. Disassemble controller
 2. Desolder the flash chip
-4. Dump the flash chip
-5. Split out the FAT16 image from the flash dump
-6. Copy your desired animation video to the filesystem
-7. Inject the modified FAT16 image back into the flash image
-8. Write the new data to flash chip
-9. Resolder flash chip
-11. Test functionality!
-12. Assemble controller
-13. Profit
+3. Dump the flash chip
+4. Split out the FAT16 image from the flash dump
+5. Copy your desired animation video to the filesystem
+6. Inject the modified FAT16 image back into the flash image
+7. Write the new data to flash chip
+8. Resolder flash chip
+9. Test functionality!
+10. Assemble controller
+11. Profit
 
 PS: It might get a lot easier when SPI or UART is verified working.
 
-
 ## USB interface
+
 USB VID: 0x2e24
 
 USB PID: 0x0652
 
+## SoC
+
+Chip Id: GP32705
+
+Possibly related sourcecode: [Github](https://github.com/ablueway/fullmac/tree/master/os/MicroC)
+
 ## Flash Chip
 
-Chip used: BY25Q32A
+Chip Id: YC25Q32B (Mfg: YC CHIP)
 
 Packaging: SOIC-8
 
 Size: 4MB
 
-Datasheet: http://www.trolink.cn/UploadFiles/Product/20160426174531_29979.pdf
+Datasheet: [YC Chip Website](http://www.ycchip.cn/att/YC25Q32B.pdf)
 
+## Converting a video file
 
-## Dumping
-MiniPro TL866II Plus supports it for parallel reading.
+The original bootanimation is 7.96 seconds long, lets assume 8 seconds is also fine
+
+In this example ffmpeg is used for the transcoding
+
+```sh
+ffmpeg \
+  -i input.mp4 \         # Input video file
+  -an \                  # Ditch audio stream
+  -c:v mjpeg \           # Encode as MJPEG
+  -s 240x320 \           # Output resolution: 240x320
+  -aspect 3:4 \          # Aspect ratio
+  -filter:v fps=fps=25 \ # Frames per second
+  -vf "transpose=2" \    # Optional: Rotate 90 degress counter-clockwise
+  -ss 00:00:02 -t 8 \    # Optional: Trim video (Start at second 2, duration of 8 seconds)
+  test.avi               # Output filename
+```
+
+Check if resulting file looks nice and plays, then copy it into the FAT16 filesystem image.
+
+## Dumping / Flashing
+
+### Via hardware flasher
+
+The hardware programmer MiniPro TL866II Plus supports it.
+
+Chip gets detected as:
+
+- ACE ACE25QC320G
+- BOYA Micro BY25Q32AS
+
+### Via SPI
 
 SPI is also an option according to the datasheet.
 
-Heck, SoC even seems to support UART.
+![SPI pinout](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/spi_flash_pinout.png)
+
+Raspberry Pi + [flashrom](https://www.flashrom.org/RaspberryPi) can likely be used to interact... (not verified)
+
+### UART
+
+Needs to be looked into...
 
 ## Memory content
+
 ```
-0x00000000-0x0010D000 Bootloader
+0x00000000-0x00002000 NVRAM
+0x00002000-0x0010D000 Bootloader
 0x0010D000-0x00400000 FAT16 Filesystem image
 ```
 
 ### Bootloader
-ALOT of debug strings, bootloader referenced as "GPDV" / "GP DV"
+
+ALOT of debug strings, bootloader referenced as "GP DV BootLoader v2.2"
 
 ### FAT16 filesystem image
+
 Contains a single file, **test.avi**.
+
 ```
 Input #0, avi, from 'test.avi':
   Metadata:
@@ -63,12 +121,16 @@ Input #0, avi, from 'test.avi':
 ```
 
 ### Checksums
-Apparently none for the FAT16 filesystem image.
+
+Apparently **none** for the FAT16 filesystem image.
 
 ## Mounting the FAT16 image for modification
+
 ### Linux/Unix
+
 Simply use **mount** (with msdos-utils / vfat support installed ofc)
-```
+
+```sh
 mkdir /tmp/fat16volume
 mount image.bin /tmp/fat16volume
 # Copy new bootanim
@@ -79,25 +141,14 @@ umount /tmp/fat16volume
 ```
 
 ### Windows
+
 Use something like [OSFMount](https://www.osforensics.com/tools/mount-disk-images.html)
 
-## Converting a video file
-The original bootanimation is 7.96 seconds long, lets assume 8 seconds is also fine
+## Credits / Sources
 
-In this example ffmpeg is used for the transcoding
-```
-ffmpeg \
-  -i input.mp4 \         # Input video file
-  -an \                  # Ditch audio stream
-  -c:v mjpeg \           # Encode as MJPEG
-  -vf "transpose=2" \    # Rotate 90 degress counter-clockwise
-  -ss 00:00:02 -t 8 \    # Optional: Trim video (Start at second 2, duration of 8 seconds)
-  -s 240x320 \           # Output resolution: 240x320
-  -aspect 3:4 \          # Aspect ratio
-  -filter:v fps=fps=25 \ # Frames per second
-  test.avi               # Output filename
-```
-Check if resulting file looks nice and plays, then copy it into the FAT16 filesystem image.
+- [chron4](https://twitter.com/Chron93540914) for providing a flashdump and doing all the hard work!
+- [Hyperkin](https://www.hyperkin.com/hyperkin-duke-wired-controller-for-xbox-one-windows-10-pc-green-limited-edition-hyperkin-officially-licensed-by-xbox.html) for that kickass controller!
 
-## Credits
-chron4 for providing a flashdump and doing all the hard work!
+## Disclaimer
+
+This project is in no way endorsed by or affiliated with Hyperkin (R), or any associated subsidiaries, logos or trademarks.
