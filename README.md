@@ -1,8 +1,28 @@
 # HyperkinDukeBootanim
 Xbox One Hyperkin Duke Controller - Info about changing bootanimation
 
+## Demo
+![Hyperkin Duke bootanimation](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/demo_gc.gif)
+
+## How to?
+1. Disassemble controller
+2. Desolder the flash chip
+4. Dump the flash chip
+5. Split out the FAT16 image from the flash dump
+6. Copy your desired animation video to the filesystem
+7. Inject the modified FAT16 image back into the flash image
+8. Write the new data to flash chip
+9. Resolder flash chip
+11. Test functionality!
+12. Assemble controller
+13. Profit
+
+PS: It might get a lot easier when SPI or UART is verified working.
+
+
 ## USB interface
 USB VID: 0x2e24
+
 USB PID: 0x0652
 
 ## Flash Chip
@@ -17,8 +37,11 @@ Datasheet: http://www.trolink.cn/UploadFiles/Product/20160426174531_29979.pdf
 
 
 ## Dumping
-MiniPro TL866II Plus supports it for parallel reading
-SPI is also an option according to the datasheet
+MiniPro TL866II Plus supports it for parallel reading.
+
+SPI is also an option according to the datasheet.
+
+Heck, SoC even seems to support UART.
 
 ## Memory content
 ```
@@ -40,7 +63,7 @@ Input #0, avi, from 'test.avi':
 ```
 
 ### Checksums
-Unknown
+Apparently none for the FAT16 filesystem image.
 
 ## Mounting the FAT16 image for modification
 ### Linux/Unix
@@ -77,4 +100,4 @@ ffmpeg \
 Check if resulting file looks nice and plays, then copy it into the FAT16 filesystem image.
 
 ## Credits
-chron4 for providing a flashdump and gettin me interested
+chron4 for providing a flashdump and doing all the hard work!
