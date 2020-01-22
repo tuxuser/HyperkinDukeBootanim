@@ -39,6 +39,7 @@ USB PID: 0x0652
 ## SoC
 
 Chip Id: GPL32705B (Generalplus)
+
 Product Brief: [Generalplus website](http://www.generalplus.com/pLVfLN1229SVpfSNnormal_download)
 
 Possibly related sourcecode: [Github](https://github.com/ablueway/fullmac/tree/master/os/MicroC)
@@ -52,6 +53,13 @@ Packaging: SOIC-8
 Size: 4MB
 
 Datasheet: [YC Chip Website](http://www.ycchip.cn/att/YC25Q32B.pdf)
+
+## Tools
+
+This repository holds following tools:
+
+* convert_video.sh -> Bash script wrapper around ffmpeg video conversion command
+* flashdump_tool.py -> Python tool to extract/inject filesystem image and extract bootloader & nvram
 
 ## Converting a video file
 
@@ -82,8 +90,8 @@ The hardware programmer MiniPro TL866II Plus supports it.
 
 Chip gets detected as:
 
-- ACE ACE25QC320G
-- BOYA Micro BY25Q32AS
+* ACE ACE25QC320G
+* BOYA Micro BY25Q32AS
 
 ### Via SPI
 
@@ -107,7 +115,11 @@ Needs to be looked into...
 
 ### Bootloader
 
-ALOT of debug strings, bootloader referenced as "GP DV BootLoader v2.2"
+ALOT of debug strings, bootloader referenced as "GP DV BootLoader v2.2".
+
+Use flash dump tool to extract it from the flash dump.
+
+Disassemble by choosing "ARM Little-Endian" and Load Address "0x2000".
 
 ### FAT16 filesystem image
 
