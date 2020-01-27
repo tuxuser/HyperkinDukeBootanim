@@ -8,3 +8,12 @@
 ![Hyperkin Duke PCB front](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/photos/pcb_front.jpg)
 ![Hyperkin Duke LCD module cable](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/photos/lcd_module_cable.jpg)
 ![Hyperkin Duke LCD module](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/photos/lcd_module.jpg)
+
+## Circuit
+
+### LCD module main connector
+![Hyperkin Duke LCD module main connector](https://raw.githubusercontent.com/tuxuser/HyperkinDukeBootanim/master/photos/lcd_module_connector.jpg)
+
+Info:
+
+Pull DAT0 HIGH for a short period (10ms) to play bootanim
