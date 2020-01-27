@@ -3,7 +3,7 @@
 
   Play bootanim trigger
 
-  D0 -> LCD module connector DAT0
+  D0 -> LCD module connector PC4
 
   Author: tuxuser - 2020
 */

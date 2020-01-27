@@ -16,4 +16,4 @@
 
 Info:
 
-Pull DAT0 HIGH for a short period (10ms) to play bootanim
+Pull PC4 HIGH for a short period (10ms) to play bootanim
