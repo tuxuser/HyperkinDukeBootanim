@@ -17,18 +17,19 @@ You will void your device's warranty!
 ## How to
 
 1. Disassemble controller
-2. Desolder the flash chip
-3. Dump the flash chip
-4. Split out the FAT16 image from the flash dump
-5. Copy your desired animation video to the filesystem
-6. Inject the modified FAT16 image back into the flash image
-7. Write the new data to flash chip
-8. Resolder flash chip
-9. Test functionality!
-10. Assemble controller
-11. Profit
+2. Dump the flash chip
+3. Split out the FAT16 image from the flash dump
+4. Copy your desired animation video to the filesystem
+5. Inject the modified FAT16 image back into the flash image
+6. Write the new data to flash chip
+7. Test functionality!
+8. Assemble controller
+9. Profit
 
-PS: It might get a lot easier when SPI or UART is verified working.
+## Photos
+Check out this page for photos of the device internals:
+
+[Photos](photos.md)
 
 ## USB interface
 
@@ -103,7 +104,7 @@ Raspberry Pi + [flashrom](https://www.flashrom.org/RaspberryPi) can likely be us
 
 ### UART
 
-Needs to be looked into...
+Seems unavailable (via stock bootloader at least...)
 
 ## Memory content
 
