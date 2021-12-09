@@ -37,6 +37,17 @@ USB VID: 0x2e24
 
 USB PID: 0x0652
 
+### Bootloader mode ?
+
+- Hold Start + Back-button, then plug in the controller
+
+Controller gets detected with following USB interface:
+
+VID: 0x11c0
+
+PID: 0x5500
+
+
 ## SoC
 
 Chip Id: GPL32705B (Generalplus)
